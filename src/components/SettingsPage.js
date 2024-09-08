@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { FaImage } from 'react-icons/fa';
-import { useUser, DefaultProfileIcon } from '../context/UserContext';
+import { useUser } from '../context/UserContext';
+import DefaultProfileIcon from './DefaultProfileIcon';
 
 const SettingsPage = () => {
-  const { profileImage, setProfileImage } = useUser();
+  const { user, setProfileImage } = useUser();
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [language, setLanguage] = useState('en');
+
+  if (!user) {
+    return <div>Loading...</div>;
+  }
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -27,9 +32,9 @@ const SettingsPage = () => {
         <h2 className="text-xl font-semibold mb-2">Profile Picture</h2>
         <div className="flex items-center space-x-4">
           <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
-            {profileImage ? (
+            {user.profileImage ? (
               <img
-                src={profileImage}
+                src={user.profileImage}
                 alt="Profile"
                 className="w-full h-full object-cover"
               />

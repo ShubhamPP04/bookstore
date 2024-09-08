@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { UserProvider } from './context/UserContext';
 import Library from './components/Library';
 import BookDetail from './components/BookDetail';
@@ -14,6 +14,7 @@ import ReaderFriends from './components/ReaderFriends';
 import Bookmarks from './components/Bookmarks';
 import HistoryPage from './components/HistoryPage';
 import SettingsPage from './components/SettingsPage';
+import ProfilePage from './components/ProfilePage';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -52,7 +53,7 @@ function App() {
                   <Route path="/" element={<MainContent />} />
                   <Route path="/library" element={<Library />} />
                   <Route path="/book/:bookId" element={<BookDetail />} />
-                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/profile" element={<ProfilePage />} />
                   <Route path="/popular" element={<PopularNow />} />
                   <Route path="/popular-books" element={<AllPopularBooks />} />
                   <Route path="/schedule" element={<ScheduleReading />} />

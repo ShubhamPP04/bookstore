@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FaSearch, FaBell, FaChevronDown, FaUser, FaCog, FaSignOutAlt, FaUsers } from 'react-icons/fa';
 import io from 'socket.io-client';
 import { useNavigate } from 'react-router-dom';
-import { useUser, DefaultProfileIcon } from '../context/UserContext';
+import { useUser } from '../context/UserContext';
+import DefaultProfileIcon from './DefaultProfileIcon';
 import styled from 'styled-components';
 import SearchResults from './SearchResults';
 import NotificationPopup from './NotificationPopup';
@@ -10,7 +11,7 @@ import userProfilePic from '../images/user.png';
 import SettingsIcon from './icons/SettingsIcon';
 
 const Header = () => {
-  const { profileImage } = useUser();
+  const { user } = useUser();
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
@@ -228,10 +229,10 @@ const Header = () => {
               onClick={toggleProfileMenu}
             >
               <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
-                {profileImage ? (
+                {user && user.profileImage ? (
                   <img
                     className="w-full h-full object-cover"
-                    src={profileImage}
+                    src={user.profileImage}
                     alt="User Profile"
                   />
                 ) : (
