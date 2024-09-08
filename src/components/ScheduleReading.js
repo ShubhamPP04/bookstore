@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaTrash } from 'react-icons/fa';
 
 const ScheduleReading = ({ totalPages }) => {
@@ -76,6 +76,19 @@ const ScheduleReading = ({ totalPages }) => {
       return updatedNotes;
     });
   };
+
+  // Load notes from localStorage on component mount
+  useEffect(() => {
+    const savedNotes = localStorage.getItem('readingNotes');
+    if (savedNotes) {
+      setNotes(JSON.parse(savedNotes));
+    }
+  }, []);
+
+  // Save notes to localStorage whenever notes state changes
+  useEffect(() => {
+    localStorage.setItem('readingNotes', JSON.stringify(notes));
+  }, [notes]);
 
   return (
     <div className="my-8">
