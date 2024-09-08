@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FaSearch, FaBell, FaChevronDown, FaUser, FaCog, FaSignOutAlt } from 'react-icons/fa';
+import { FaSearch, FaBell, FaChevronDown, FaUser, FaCog, FaSignOutAlt, FaUsers } from 'react-icons/fa';
+import io from 'socket.io-client';
 import { useNavigate } from 'react-router-dom';
 import { useUser, DefaultProfileIcon } from '../context/UserContext';
 import styled from 'styled-components';
@@ -20,6 +21,11 @@ const Header = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const notificationRef = useRef(null);
+  const [visitorCount, setVisitorCount] = useState(0);
+  const [showVisitorPopup, setShowVisitorPopup] = useState(false);
+  const visitorPopupRef = useRef(null);
+  const socketRef = useRef(null);
+  const [isCountAnimating, setIsCountAnimating] = useState(false);
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -112,6 +118,55 @@ const Header = () => {
     };
   }, []);
 
+  useEffect(() => {
+    // Simulating real-time visitor count updates
+    const interval = setInterval(() => {
+      setVisitorCount(prevCount => prevCount + Math.floor(Math.random() * 3));
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (visitorPopupRef.current && !visitorPopupRef.current.contains(event.target)) {
+        setShowVisitorPopup(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Connect to the WebSocket server
+    socketRef.current = io('https://bookstore-bookie.vercel.app/');
+
+    // Listen for visitor count updates
+    socketRef.current.on('visitorCountUpdate', (count) => {
+      setVisitorCount(prevCount => {
+        if (prevCount !== count) {
+          setIsCountAnimating(true);
+          setTimeout(() => setIsCountAnimating(false), 300); // Duration of the animation
+        }
+        return count;
+      });
+    });
+
+    return () => {
+      // Disconnect the socket when the component unmounts
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+      }
+    };
+  }, []);
+
+  const toggleVisitorPopup = () => {
+    setShowVisitorPopup(!showVisitorPopup);
+  };
+
   return (
     <header className={`p-4 flex flex-col sticky top-0 z-50 transition-all duration-300 ${
       isScrolled ? 'bg-[#EFEDE2]/95 backdrop-blur-md shadow-md' : 'bg-[#EFEDE2]'
@@ -132,8 +187,28 @@ const Header = () => {
           />
         </div>
 
-        {/* User Profile and Notification */}
+        {/* User Profile, Notification, and Visitor Count */}
         <div className="flex items-center space-x-6">
+          <div className="relative" ref={visitorPopupRef}>
+            <div
+              className="flex items-center space-x-2 cursor-pointer group"
+              onClick={toggleVisitorPopup}
+            >
+              <FaUsers className="text-gray-600 group-hover:text-gray-800" />
+              <span 
+                className={`text-gray-800 font-semibold group-hover:text-gray-600 transition-transform duration-300 ${
+                  isCountAnimating ? 'scale-125' : 'scale-100'
+                }`}
+              >
+                {visitorCount}
+              </span>
+            </div>
+            {showVisitorPopup && (
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 px-4 z-10">
+                <p className="text-sm text-gray-700">Current visitors: {visitorCount}</p>
+              </div>
+            )}
+          </div>
           <div className="relative" ref={notificationRef}>
             <FaBell
               className="text-gray-600 cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 hover:text-gray-800"
