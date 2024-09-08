@@ -163,7 +163,7 @@ const Header = () => {
                   <DefaultProfileIcon />
                 )}
               </div>
-              <span className="text-gray-800 font-semibold group-hover:text-gray-600">Nonu</span>
+              <span className="text-gray-800 font-semibold group-hover:text-gray-600">User</span>
               <FaChevronDown className="text-gray-800 group-hover:text-gray-600 transition-all duration-200 ease-in-out group-hover:rotate-180" />
             </div>
             {showProfileMenu && (

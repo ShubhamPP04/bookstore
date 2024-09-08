@@ -50,7 +50,7 @@ const MainContent = () => {
       <div className="flex justify-between items-start mb-8">
         {/* Text Section - Left side */}
         <div className="flex flex-col space-y-4 max-w-xl">
-          <h1 className="text-4xl font-semibold text-gray-900">Happy reading, <span className="font-light">Nonu</span></h1>
+          <h1 className="text-4xl font-semibold text-gray-900">Happy reading, <span className="font-light">User</span></h1>
           <p className="text-gray-700">
             Wow! you've delved deep into the wizarding world's secrets. Have Harry's parents died yet? Oops, looks like you're not there yet. Get reading now!
           </p>
