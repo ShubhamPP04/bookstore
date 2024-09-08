@@ -1,6 +1,18 @@
-# Getting Started with Create React App
+# Bookstore
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a comprehensive online bookstore application built with React. It allows users to browse, search, and read books, as well as manage their reading history and bookmarks.
+
+## Features
+
+- **Home Page**: Displays a welcome message and highlights popular books.
+- **Library**: Browse books by genre and publication year.
+- **Book Details**: View detailed information about a book, including its description, authors, and genres.
+- **Bookmarks**: Manage a list of bookmarked books.
+- **Reading History**: Track books that have been viewed.
+- **Search**: Search for books by name, author, or edition.
+- **Responsive Design**: Optimized for both desktop and mobile devices.
+- **Error Handling**: Graceful error handling with an error boundary component.
+- **Chatbot Integration**: Integrated chatbot for user assistance.
 
 ## Available Scripts
 
@@ -37,7 +49,7 @@ If you aren't satisfied with the build tool and configuration choices, you can `
 
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However, we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
 ## Learn More
 
